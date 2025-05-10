@@ -1,59 +1,60 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.title {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .three-container {
-  width: 100%;
-  height: 50vh; /* or set a fixed height like 600px if you prefer */
-  position: relative;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
 }
 
 canvas {
   background: transparent;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  padding: 4rem 2rem;
+}
+
+.title {
+  font-size: 4rem;
+  text-shadow: 2px 2px 12px #00ffcc;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  text-shadow: 1px 1px 6px #ff00ff;
+}
+
+.btn-meme {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 0 20px #ff69b4;
+  transition: transform 0.2s ease;
+}
+
+.btn-meme:hover {
+  transform: scale(1.05);
 }

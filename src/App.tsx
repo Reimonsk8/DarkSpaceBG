@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import ThreeDContainer from './components/ThreeDContainer'
 import './App.css'
 
@@ -9,32 +7,14 @@ function App() {
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-
-
-
-
-      </div>
-      <ThreeDContainer/>
-      <h1> Template Vite + React + GithubPages </h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <ThreeDContainer />
+      <div className="content">
+        <h1 className="title">LUKE THE BOY</h1>
+        <p className="subtitle">The most legendary meme coin on the blockchain 🌐🚀</p>
+        <button className="btn-meme" onClick={() => setCount(count + 1)}>
+          Clicks: {count}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
