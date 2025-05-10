@@ -72,7 +72,7 @@ function App() {
       <ThreeDContainer />
       
       {/* Esquinas */}
-      <a href="https://pump.fun" target="_blank" rel="noopener noreferrer" style={{
+      <a href="https://pump.fun/coin/F6eHz5rqmcM6tVxT9yZykg1MBYPzY7B62rEXaxPCpump?include-nsfw=true" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         left: '10px',
