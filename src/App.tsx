@@ -9,7 +9,7 @@ function App() {
   const [typedText, setTypedText] = useState('')
   
   const splashText = "LUUKE: The cosmic meme awakens"
-  const contractAddress = '12e1241245pump'
+  const contractAddress = '69ashqDpPX5vwyptRRnfJGi5Nu6MFtHBfxhTNqdRpump'
 
   const handleCopy = () => {
     navigator.clipboard.writeText(contractAddress).then(() => {
@@ -72,7 +72,7 @@ function App() {
       <ThreeDContainer />
       
       {/* Esquinas */}
-      <a href="https://pump.fun/coin/F6eHz5rqmcM6tVxT9yZykg1MBYPzY7B62rEXaxPCpump?include-nsfw=true" target="_blank" rel="noopener noreferrer" style={{
+      <a href="https://pump.fun/coin/69ashqDpPX5vwyptRRnfJGi5Nu6MFtHBfxhTNqdRpump?include-nsfw=true" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         left: '10px',
