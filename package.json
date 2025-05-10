@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Reimonsk8.github.io/DarkSpaceBG",
+  "homepage": "https://reimonsk8.github.io/DarkSpaceBG/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
