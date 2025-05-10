@@ -8,7 +8,7 @@ function App() {
   const [showSplash, setShowSplash] = useState(true)
   const [typedText, setTypedText] = useState('')
   
-  const splashText = "LUKE: The cosmic meme awakens"
+  const splashText = "LUUKE: The cosmic meme awakens"
   const contractAddress = '12e1241245pump'
 
   const handleCopy = () => {
