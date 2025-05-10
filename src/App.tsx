@@ -98,7 +98,7 @@ function App() {
       {/* Contenido central */}
       <div className="content">
         <h1 className="title">LUKE</h1>
-        <p className="subtitle">The most legendary meme coin on the blockchain</p>
+        <p className="subtitle">Two things are infinite: the universe and human stupidity; and I’m not sure about the universe.</p>
       </div>
     </>
   )
