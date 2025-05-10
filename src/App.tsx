@@ -5,7 +5,10 @@ import './App.css'
 function App() {
   const [copied, setCopied] = useState(false)
   const [imageSrc, setImageSrc] = useState("img1.png")
-
+  const [showSplash, setShowSplash] = useState(true)
+  const [typedText, setTypedText] = useState('')
+  
+  const splashText = "LUKE: The cosmic meme awakens"
   const contractAddress = '12e1241245pump'
 
   const handleCopy = () => {
@@ -15,14 +18,54 @@ function App() {
     })
   }
 
-  // Toggle image every 2 seconds
+  // Mostrar splash con animación máquina de escribir (1 seg aprox)
+  useEffect(() => {
+    let index = 0
+    const typingSpeed = 1000 / splashText.length  // velocidad más rápida
+    const typingInterval = setInterval(() => {
+      setTypedText(prev => prev + splashText.charAt(index))
+      index++
+      if (index >= splashText.length) {
+        clearInterval(typingInterval)
+        setTimeout(() => setShowSplash(false), 300)  // espera breve al terminar
+      }
+    }, typingSpeed)
+
+    return () => clearInterval(typingInterval)
+  }, [])
+
+  // Cambiar imagen cada 2 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setImageSrc(prev => (prev === "img1.png" ? "img2.png" : "img1.png"))
     }, 2000)
-
-    return () => clearInterval(interval) // Cleanup on unmount
+    return () => clearInterval(interval)
   }, [])
+
+  if (showSplash) {
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100vh',
+        backgroundColor: '#000',
+        color: '#fff',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: "'Press Start 2P', cursive, sans-serif",
+        fontSize: '1.2rem',
+        letterSpacing: '0.05em',
+        textShadow: '2px 2px 0 #333',
+        zIndex: 9999,
+        whiteSpace: 'pre'   // 👈 esto evita el corte de la primera letra
+      }}>
+        {typedText}
+      </div>
+    )
+  }
 
   return (
     <>
