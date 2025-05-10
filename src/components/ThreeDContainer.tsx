@@ -9,20 +9,18 @@ const ThreeDContainer = () => {
 
   useEffect(() => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
-    camera.position.set(0, 0.5, 3.5);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    // renderer.setClearColor(0x000000, 0);
-
     const container = mountRef.current;
+
     const width = container.clientWidth;
     const height = container.clientHeight;
 
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    camera.position.set(0, 0.5, 3.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
 
     container.appendChild(renderer.domElement);
 
@@ -32,7 +30,7 @@ const ThreeDContainer = () => {
     controls.minDistance = 1;
     controls.maxDistance = 6;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 3;
+    controls.autoRotateSpeed = 2;
 
     scene.add(new THREE.AmbientLight(0xffffff, 1.2));
     const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
@@ -44,7 +42,6 @@ const ThreeDContainer = () => {
       { color: 0x00aaff, pos: [4, -1, 4] },
       { color: 0xff00ff, pos: [-4, -1, 4] },
     ];
-
     pointLights.forEach(({ color, pos }) => {
       const light = new THREE.PointLight(color, 1.5, 15);
       light.position.set(...pos);
@@ -62,14 +59,11 @@ const ThreeDContainer = () => {
 
         const animations = gltf.animations;
         const mixer = new THREE.AnimationMixer(model);
-
-        if (animations && animations.length > 0) {
-          const animationIndex = 2;
-          console.log("Available animations:", animations.map((a, i) => `${i}: ${a.name}`));
+        if (animations.length > 0) {
+          const animationIndex = 2; // Customize this index
           const action = mixer.clipAction(animations[animationIndex]);
           action.play();
         }
-
         mixerRef.current = mixer;
       },
       undefined,
@@ -79,7 +73,6 @@ const ThreeDContainer = () => {
     );
 
     const clock = new THREE.Clock();
-
     const animate = () => {
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
@@ -90,7 +83,6 @@ const ThreeDContainer = () => {
     animate();
 
     const handleResize = () => {
-      if (!container) return;
       const width = container.clientWidth;
       const height = container.clientHeight;
       camera.aspect = width / height;
@@ -110,12 +102,7 @@ const ThreeDContainer = () => {
     };
   }, []);
 
-  return (
-    <>
-      {/* <h1 className="title">3D Model Viewer</h1> */}
-      <div ref={mountRef} className="three-container" />
-    </>
-  );
+  return <div ref={mountRef} className="three-container" />;
 };
 
 export default ThreeDContainer;

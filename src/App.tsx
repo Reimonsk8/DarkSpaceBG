@@ -1,44 +1,54 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ThreeDContainer from './components/ThreeDContainer'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [copied, setCopied] = useState(false)
+  const [imageSrc, setImageSrc] = useState("img1.png")
 
   const contractAddress = '12e1241245pump'
 
   const handleCopy = () => {
     navigator.clipboard.writeText(contractAddress).then(() => {
       setCopied(true)
-      setTimeout(() => setCopied(false), 1500) // Mensaje temporal
+      setTimeout(() => setCopied(false), 1500)
     })
   }
+
+  // Toggle image every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImageSrc(prev => (prev === "img1.png" ? "img2.png" : "img1.png"))
+    }, 2000)
+
+    return () => clearInterval(interval) // Cleanup on unmount
+  }, [])
 
   return (
     <>
       <ThreeDContainer />
+      
       {/* Esquinas */}
       <a href="https://pump.fun" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         left: '10px',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
-        fontSize: '0.8rem',
+        fontSize: '1.8rem',
         color: 'white',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
         textDecoration: 'none',
         cursor: 'pointer'
       }}>
-        pumpfun
+        pump.fun
       </a>
       <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         right: '10px',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
-        fontSize: '0.8rem',
+        fontSize: '1.8rem',
         color: 'white',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
@@ -55,16 +65,18 @@ function App() {
         left: '50%',
         transform: 'translateX(-50%)',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
-        fontSize: '0.6rem',
+        fontSize: '1rem',
         color: 'white',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
-        backgroundColor: 'rgba(0,0,0,0.7)',
         padding: '4px 8px',
-        borderRadius: '8px'
+        borderRadius: '8px',
+        textAlign: 'center'
       }}>
-        CA: {contractAddress} {' '}
-        <button 
+        <img style={{ width: "200px" }} src={imageSrc} alt="LUKE" className="meme-image" />
+        <br />
+        CA: {contractAddress}{' '}
+        <button
           style={{
             background: '#ff69b4',
             color: 'white',
@@ -86,10 +98,7 @@ function App() {
       {/* Contenido central */}
       <div className="content">
         <h1 className="title">LUKE</h1>
-        <p className="subtitle">The most legendary meme coin on the blockchain </p>
-        <button className="btn-meme" onClick={() => setCount(count + 1)}>
-          Clicks: {count}
-        </button>
+        <p className="subtitle">The most legendary meme coin on the blockchain</p>
       </div>
     </>
   )

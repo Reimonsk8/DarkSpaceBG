@@ -16,7 +16,7 @@ body, html, #root {
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: -1;
+  overflow: hidden;
   top: 0;
   left: 0;
 }
@@ -31,6 +31,7 @@ canvas {
   text-align: center;
   color: white;
   padding: 4rem 2rem;
+  pointer-events: none;
 }
 
 .title {
@@ -45,6 +46,9 @@ canvas {
 }
 
 .btn-meme {
+  align-self: center;
+  text-align: center;
+  max-width: 200px;
   margin-top: 2rem;
   font-size: 1.25rem;
   background-color: #ff69b4;
