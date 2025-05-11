@@ -4,12 +4,12 @@ import './App.css'
 
 function App() {
   const [copied, setCopied] = useState(false)
-  const [imageSrc, setImageSrc] = useState("img1.png")
+  const [imageSrc, setImageSrc] = useState("img2.png")
   const [showSplash, setShowSplash] = useState(true)
   const [typedText, setTypedText] = useState('')
   
-  const splashText = "LUUKE: The cosmic meme awakens"
-  const contractAddress = '69ashqDpPX5vwyptRRnfJGi5Nu6MFtHBfxhTNqdRpump'
+  const splashText = "TOOM: The cosmic meme awakens"
+  const contractAddress = 'xxxxxxxxxxxxxxxxxxxxxxxpump'
 
   const handleCopy = () => {
     navigator.clipboard.writeText(contractAddress).then(() => {
@@ -37,7 +37,7 @@ function App() {
   // Cambiar imagen cada 2 segundos
   useEffect(() => {
     const interval = setInterval(() => {
-      setImageSrc(prev => (prev === "img1.png" ? "img2.png" : "img1.png"))
+      setImageSrc(prev => (prev === "img2.png" ? "img2.png" : "img2.png"))
     }, 2000)
     return () => clearInterval(interval)
   }, [])
@@ -72,7 +72,7 @@ function App() {
       <ThreeDContainer />
       
       {/* Esquinas */}
-      <a href="https://pump.fun/coin/69ashqDpPX5vwyptRRnfJGi5Nu6MFtHBfxhTNqdRpump?include-nsfw=true" target="_blank" rel="noopener noreferrer" style={{
+      <a href="https://pump.fun/coin/xxxxxxxxxxxxxxxxxxxxpump?include-nsfw=true" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         left: '10px',
@@ -86,7 +86,7 @@ function App() {
       }}>
         pump.fun
       </a>
-      <a href="https://x.com/LukeOnSol_" target="_blank" rel="noopener noreferrer" style={{
+      <a href="https://x.com/Tom_" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         right: '10px',
@@ -116,7 +116,7 @@ function App() {
         borderRadius: '8px',
         textAlign: 'center'
       }}>
-        <img style={{ width: "200px" }} src={imageSrc} alt="LUKE" className="meme-image" />
+        <img style={{ width: "200px" }} src={imageSrc} alt="TOM" className="meme-image" />
         <br />
         CA: {contractAddress}{' '}
         <button
@@ -140,7 +140,7 @@ function App() {
 
       {/* Contenido central */}
       <div className="content">
-        <h1 className="title">LUKE</h1>
+        <h1 className="title">TOM</h1>
         <p className="subtitle">Two things are infinite: the universe and human stupidity; and I’m not sure about the universe.</p>
       </div>
     </>
