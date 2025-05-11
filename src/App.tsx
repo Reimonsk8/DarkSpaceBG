@@ -84,7 +84,7 @@ function App() {
       }}>
         pump.fun
       </a>
-      <a href="https://x.com/Tom_" target="_blank" rel="noopener noreferrer" style={{
+      <a href="https://x.com/xxxxxcomingsoonxxxx" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         right: '10px',
