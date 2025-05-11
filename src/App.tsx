@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ThreeDContainer from './components/ThreeDContainer'
 import './App.css'
 
@@ -7,8 +7,9 @@ function App() {
   const [imageSrc, setImageSrc] = useState("img2.png")
   const [showSplash, setShowSplash] = useState(false)
   const [typedText, setTypedText] = useState('')
-  
-  // const splashText = "TOOM: The cosmic meme awakens"
+  const audioRef = useRef(null)  
+  const [audioStarted, setAudioStarted] = useState(false) 
+
   const contractAddress = 'xxxxxxxxxxxxxxxxxxxxxxxpump'
 
   const handleCopy = () => {
@@ -18,29 +19,24 @@ function App() {
     })
   }
 
-  // Mostrar splash con animación máquina de escribir (1 seg aprox)
-  // useEffect(() => {
-  //   let index = 0
-  //   const typingSpeed = 1000 / splashText.length  // velocidad más rápida
-  //   const typingInterval = setInterval(() => {
-  //     setTypedText(prev => prev + splashText.charAt(index))
-  //     index++
-  //     if (index >= splashText.length) {
-  //       clearInterval(typingInterval)
-  //       setTimeout(() => setShowSplash(false), 300)  // espera breve al terminar
-  //     }
-  //   }, typingSpeed)
-
-  //   return () => clearInterval(typingInterval)
-  // }, [])
-
-  // Cambiar imagen cada 2 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setImageSrc(prev => (prev === "img2.png" ? "img2.png" : "img2.png"))
     }, 2000)
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    const handleFirstClick = () => {
+      if (!audioStarted && audioRef.current) {
+        audioRef.current.play()
+        setAudioStarted(true)
+      }
+    }
+
+    window.addEventListener('click', handleFirstClick)
+    return () => window.removeEventListener('click', handleFirstClick)
+  }, [audioStarted])
 
   if (showSplash) {
     return (
@@ -60,7 +56,7 @@ function App() {
         letterSpacing: '0.05em',
         textShadow: '2px 2px 0 #333',
         zIndex: 9999,
-        whiteSpace: 'pre'   // 👈 esto evita el corte de la primera letra
+        whiteSpace: 'pre'
       }}>
         {typedText}
       </div>
@@ -69,9 +65,11 @@ function App() {
 
   return (
     <>
+      {/* ✅ LÍNEA CORREGIDA */}
+      <audio ref={audioRef} src="/tom.mp3" preload="auto" />
+
       <ThreeDContainer />
       
-      {/* Esquinas */}
       <a href="https://pump.fun/coin/xxxxxxxxxxxxxxxxxxxxpump?include-nsfw=true" target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
@@ -101,7 +99,6 @@ function App() {
         X
       </a>
 
-      {/* CA + COPY */}
       <div style={{
         position: 'fixed',
         bottom: '10px',
@@ -138,7 +135,6 @@ function App() {
         {copied && <span style={{ marginLeft: '10px', color: '#00ff00' }}>Copied!</span>}
       </div>
 
-      {/* Contenido central */}
       <div className="content">
         <h1 className="title">TOM</h1>
         <p className="subtitle">Two things are infinite: the universe and human stupidity; and I’m not sure about the universe.</p>
