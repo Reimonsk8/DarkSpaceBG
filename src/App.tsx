@@ -7,25 +7,53 @@ function App() {
   const [imageSrc, setImageSrc] = useState("img2.png")
   const [showSplash, setShowSplash] = useState(false)
   const [typedText, setTypedText] = useState('')
-  const audioRef = useRef(null)  
-  const [audioStarted, setAudioStarted] = useState(false) 
+  const audioRef = useRef(null)
+  const [audioStarted, setAudioStarted] = useState(false)
 
-  const contractAddress = 'xxxxxxxxxxxxxxxxxxxxxxxpump'
+  const [ca, setCa] = useState('')
+  const [twitterLink, setTwitterLink] = useState('')
+  const [telegramLink, setTelegramLink] = useState('')
+  const [metaInfo, setMetaInfo] = useState([])
 
+  // Fetch data from API
+  useEffect(() => {
+  fetch('https://re9tawzde2.execute-api.us-west-1.amazonaws.com/stage1/API/FetchData')
+    .then(response => response.json())
+    .then(data => {
+      // Parse the stringified body
+      const parsedBody = JSON.parse(data.body);
+      if (Array.isArray(parsedBody) && parsedBody.length > 0) {
+        const info = parsedBody[0];
+        setCa(info.ca);
+        setTwitterLink(info.twitter_link);
+        setTelegramLink(info.telegram_link);
+        setMetaInfo(Array.isArray(info.meta_info) ? info.meta_info : []);
+      }
+    })
+    .catch(error => console.error('Error fetching API data:', error));
+  }, [])
+
+  // Copy contract address
   const handleCopy = () => {
-    navigator.clipboard.writeText(contractAddress).then(() => {
+    if (!ca) return;
+    navigator.clipboard.writeText(ca).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
     })
   }
 
+  // Toggle image if multiple frames
+  const images = ["img1.png", "img2.png"]
   useEffect(() => {
+    let index = 0
     const interval = setInterval(() => {
-      setImageSrc(prev => (prev === "img2.png" ? "img2.png" : "img2.png"))
+      index = (index + 1) % images.length
+      setImageSrc(images[index])
     }, 2000)
     return () => clearInterval(interval)
   }, [])
 
+  // Start audio on first user click
   useEffect(() => {
     const handleFirstClick = () => {
       if (!audioStarted && audioRef.current) {
@@ -33,10 +61,23 @@ function App() {
         setAudioStarted(true)
       }
     }
-
     window.addEventListener('click', handleFirstClick)
     return () => window.removeEventListener('click', handleFirstClick)
   }, [audioStarted])
+
+  // Optional splash screen typing effect
+  useEffect(() => {
+    if (showSplash) {
+      const message = 'Loading TOM...'
+      let i = 0
+      const interval = setInterval(() => {
+        setTypedText(message.slice(0, i + 1))
+        i++
+        if (i === message.length) clearInterval(interval)
+      }, 100)
+      return () => clearInterval(interval)
+    }
+  }, [showSplash])
 
   if (showSplash) {
     return (
@@ -65,12 +106,12 @@ function App() {
 
   return (
     <>
-      {/* ✅ LÍNEA CORREGIDA */}
       <audio ref={audioRef} src="/tom.mp3" preload="auto" />
 
       <ThreeDContainer />
-      
-      <a href="https://pump.fun/coin/xxxxxxxxxxxxxxxxxxxxpump?include-nsfw=true" target="_blank" rel="noopener noreferrer" style={{
+
+      {/* Pump.fun Link */}
+      <a href={`https://pump.fun/coin/${ca}?include-nsfw=true`} target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         left: '10px',
@@ -84,21 +125,44 @@ function App() {
       }}>
         pump.fun
       </a>
-      <a href="https://x.com/xxxxxcomingsoonxxxx" target="_blank" rel="noopener noreferrer" style={{
-        position: 'fixed',
-        top: '10px',
-        right: '10px',
-        fontFamily: "'Press Start 2P', cursive, sans-serif",
-        fontSize: '1.8rem',
-        color: 'white',
-        textShadow: '2px 2px 0 #000',
-        zIndex: 20,
-        textDecoration: 'none',
-        cursor: 'pointer'
-      }}>
-        X
-      </a>
 
+      {/* Twitter Link */}
+      {twitterLink && (
+        <a href={twitterLink} target="_blank" rel="noopener noreferrer" style={{
+          position: 'fixed',
+          top: '10px',
+          right: '10px',
+          fontFamily: "'Press Start 2P', cursive, sans-serif",
+          fontSize: '1.8rem',
+          color: 'white',
+          textShadow: '2px 2px 0 #000',
+          zIndex: 20,
+          textDecoration: 'none',
+          cursor: 'pointer'
+        }}>
+          X
+        </a>
+      )}
+
+      {/* Telegram Link */}
+      {telegramLink && (
+        <a href={telegramLink} target="_blank" rel="noopener noreferrer" style={{
+          position: 'fixed',
+          top: twitterLink ? '60px' : '10px',
+          right: '10px',
+          fontFamily: "'Press Start 2P', cursive, sans-serif",
+          fontSize: '1.8rem',
+          color: 'white',
+          textShadow: '2px 2px 0 #000',
+          zIndex: 20,
+          textDecoration: 'none',
+          cursor: 'pointer'
+        }}>
+          Telegram
+        </a>
+      )}
+
+      {/* Bottom Info */}
       <div style={{
         position: 'fixed',
         bottom: '10px',
@@ -113,9 +177,9 @@ function App() {
         borderRadius: '8px',
         textAlign: 'center'
       }}>
-        <img style={{ width: "200px" }} src={imageSrc} alt="TOM" className="meme-image" />
+        <img style={{ width: "200px" }} src={imageSrc} alt="Animated meme" className="meme-image" />
         <br />
-        CA: {contractAddress}{' '}
+        CA: {ca}{' '}
         <button
           style={{
             background: '#ff69b4',
@@ -135,9 +199,13 @@ function App() {
         {copied && <span style={{ marginLeft: '10px', color: '#00ff00' }}>Copied!</span>}
       </div>
 
+      {/* Main Content */}
       <div className="content">
         <h1 className="title">TOM</h1>
         <p className="subtitle">Two things are infinite: the universe and human stupidity; and I’m not sure about the universe.</p>
+        {metaInfo.map((info, index) => (
+          <p key={index} style={{ fontSize: '0.8rem', marginTop: '10px' }}>{info}</p>
+        ))}
       </div>
     </>
   )
