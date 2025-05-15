@@ -201,7 +201,7 @@ function App() {
 
       {/* Main Content */}
       <div className="content">
-        <h1 className="title">TOM</h1>
+        <h1 className="title">LUKE</h1>
         <p className="subtitle">Two things are infinite: the universe and human stupidity; and I’m not sure about the universe.</p>
         {metaInfo.map((info, index) => (
           <p key={index} style={{ fontSize: '0.8rem', marginTop: '10px' }}>{info}</p>
