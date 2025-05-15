@@ -43,7 +43,7 @@ function App() {
   }
 
   // Toggle image if multiple frames
-  const images = ["img1.png", "img2.png"]
+  const images = ["img1.png"]
   useEffect(() => {
     let index = 0
     const interval = setInterval(() => {
