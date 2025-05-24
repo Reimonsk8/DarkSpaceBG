@@ -5,25 +5,22 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const ThreeDContainer = () => {
   const mountRef = useRef(null);
-  const mixerRef = useRef(null);
+  const mixersRef = useRef([]); // Array to hold multiple mixers
 
   useEffect(() => {
     const scene = new THREE.Scene();
     const container = mountRef.current;
-
     const width = container.clientWidth;
     const height = container.clientHeight;
-
     const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
     camera.position.set(0, 0.5, 3.5);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
-
+    renderer.setClearColor(0x000000, 0); // Second parameter is alpha
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
-
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
@@ -32,43 +29,37 @@ const ThreeDContainer = () => {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 2;
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-    directionalLight.position.set(5, 10, 10);
+    // Brighter lighting
+    scene.add(new THREE.AmbientLight(0xffffff, 2.5));
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 4);
+    directionalLight.position.set(10, 10, 9);
+    directionalLight.castShadow = false;
+    directionalLight.intensity = 10; // Adjust intensity for brightness
     scene.add(directionalLight);
 
-    const pointLights = [
-      { color: 0xffaa00, pos: [-4, 2, -4] },
-      { color: 0x00aaff, pos: [4, -1, 4] },
-      { color: 0xff00ff, pos: [-4, -1, 4] },
-    ];
-    pointLights.forEach(({ color, pos }) => {
-      const light = new THREE.PointLight(color, 1.5, 15);
-      light.position.set(...pos);
-      scene.add(light);
-    });
-
     const loader = new GLTFLoader();
+    
+    // Load first model
     loader.load(
-      "GLB/space_boi.glb",
+      "GLB/source/sample.glb",
       (gltf) => {
         const model = gltf.scene;
-        model.position.set(0, -0.5, 0);
-        model.scale.set(0.35, 0.35, 0.35);
+        model.position.set(0, 0, 0); // Keep first model at original position
+        model.scale.set(2, 2, 2);
         scene.add(model);
 
         const animations = gltf.animations;
-        const mixer = new THREE.AnimationMixer(model);
         if (animations.length > 0) {
+          const mixer = new THREE.AnimationMixer(model);
           const animationIndex = 2; // Customize this index
           const action = mixer.clipAction(animations[animationIndex]);
           action.play();
+          mixersRef.current.push(mixer); // Add to mixers array
         }
-        mixerRef.current = mixer;
       },
       undefined,
       (error) => {
-        console.error("Error loading model:", error);
+        console.error("Error loading first model:", error);
       }
     );
 
@@ -76,7 +67,8 @@ const ThreeDContainer = () => {
     const animate = () => {
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
-      mixerRef.current?.update(delta);
+      // Update all mixers
+      mixersRef.current.forEach(mixer => mixer.update(delta));
       controls.update();
       renderer.render(scene, camera);
     };

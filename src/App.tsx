@@ -42,17 +42,6 @@ function App() {
     })
   }
 
-  // Toggle image if multiple frames
-  const images = ["img1.png"]
-  useEffect(() => {
-    let index = 0
-    const interval = setInterval(() => {
-      index = (index + 1) % images.length
-      setImageSrc(images[index])
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [])
-
   // Start audio on first user click
   useEffect(() => {
     const handleFirstClick = () => {
@@ -117,7 +106,7 @@ function App() {
         left: '10px',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
         fontSize: '1.8rem',
-        color: 'white',
+        color: 'purple',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
         textDecoration: 'none',
@@ -134,7 +123,7 @@ function App() {
           right: '10px',
           fontFamily: "'Press Start 2P', cursive, sans-serif",
           fontSize: '1.8rem',
-          color: 'white',
+          color: 'pink',
           textShadow: '2px 2px 0 #000',
           zIndex: 20,
           textDecoration: 'none',
@@ -170,14 +159,13 @@ function App() {
         transform: 'translateX(-50%)',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
         fontSize: '1rem',
-        color: 'white',
+        color: 'yellow',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
         padding: '4px 8px',
         borderRadius: '8px',
         textAlign: 'center'
       }}>
-        <img style={{ width: "200px" }} src={imageSrc} alt="Animated meme" className="meme-image" />
         <br />
         CA: {ca}{' '}
         <button
@@ -189,7 +177,7 @@ function App() {
             borderRadius: '4px',
             cursor: 'pointer',
             fontFamily: "'Press Start 2P', cursive, sans-serif",
-            fontSize: '0.6rem',
+            fontSize: '1.6rem',
             textShadow: '2px 2px 0 #000',
           }}
           onClick={handleCopy}
@@ -201,8 +189,8 @@ function App() {
 
       {/* Main Content */}
       <div className="content">
-        <h1 className="title">LUKE</h1>
-        <p className="subtitle">Two things are infinite: the universe and human stupidity; and I’m not sure about the universe.</p>
+        <h1 className="title">asstr0naut.XYZ</h1>
+        <p className="subtitle">a meme coin from another galaxy 🌌🚀</p>
         {metaInfo.map((info, index) => (
           <p key={index} style={{ fontSize: '0.8rem', marginTop: '10px' }}>{info}</p>
         ))}
