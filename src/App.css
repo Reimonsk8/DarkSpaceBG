@@ -13,7 +13,7 @@ body, html, #root {
 }
 
 .three-container {
-  background-image: url("./assets/bg.gif");
+  background-image: url("./bg.gif");
   background-size: contain;      /* Makes image cover full container */
   background-position: center;   /* Centers the image */
   background-repeat: no-repeat;  /* Prevents tiling */
