@@ -10,33 +10,55 @@ function App() {
   const audioRef = useRef(null)
   const [audioStarted, setAudioStarted] = useState(false)
 
-  const [ca, setCa] = useState('')
-  const [twitterLink, setTwitterLink] = useState('')
-  const [telegramLink, setTelegramLink] = useState('')
-  const [metaInfo, setMetaInfo] = useState([])
+  // Updated state for new JSON structure
+  const [projectData, setProjectData] = useState(null)
+  const [currentSection, setCurrentSection] = useState(0)
+  const [currentMultimedia, setCurrentMultimedia] = useState(0)
 
-  // Fetch data from API
+  // Fetch data from API (updated to handle new structure)
   useEffect(() => {
-  fetch('https://re9tawzde2.execute-api.us-west-1.amazonaws.com/stage1/API/FetchData')
-    .then(response => response.json())
-    .then(data => {
-      // Parse the stringified body
-      const parsedBody = JSON.parse(data.body);
-      if (Array.isArray(parsedBody) && parsedBody.length > 0) {
-        const info = parsedBody[0];
-        setCa(info.ca);
-        setTwitterLink(info.twitter_link);
-        setTelegramLink(info.telegram_link);
-        setMetaInfo(Array.isArray(info.meta_info) ? info.meta_info : []);
-      }
-    })
-    .catch(error => console.error('Error fetching API data:', error));
+    fetch('https://re9tawzde2.execute-api.us-west-1.amazonaws.com/stage1/API/FetchData')
+      .then(response => response.json())
+      .then(data => {
+        // Parse the stringified body
+        const parsedBody = JSON.parse(data.body);
+        if (Array.isArray(parsedBody) && parsedBody.length > 0) {
+          setProjectData(parsedBody[0]);
+        }
+      })
+      .catch(error => console.error('Error fetching API data:', error));
   }, [])
+
+  // Auto-cycle through sections
+  useEffect(() => {
+    if (projectData?.sections) {
+      const interval = setInterval(() => {
+        setCurrentSection(prev => 
+          prev >= projectData.sections.length - 1 ? 0 : prev + 1
+        );
+      }, 6000); // Change section every 6 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [projectData]);
+
+  // Auto-cycle through multimedia
+  useEffect(() => {
+    if (projectData?.multimedia && projectData.multimedia.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentMultimedia(prev => 
+          prev >= projectData.multimedia.length - 1 ? 0 : prev + 1
+        );
+      }, 4000); // Change multimedia every 4 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [projectData]);
 
   // Copy contract address
   const handleCopy = () => {
-    if (!ca) return;
-    navigator.clipboard.writeText(ca).then(() => {
+    if (!projectData?.ca) return;
+    navigator.clipboard.writeText(projectData.ca).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
     })
@@ -57,7 +79,7 @@ function App() {
   // Optional splash screen typing effect
   useEffect(() => {
     if (showSplash) {
-      const message = 'Loading TOM...'
+      const message = projectData?.title || 'Loading...'
       let i = 0
       const interval = setInterval(() => {
         setTypedText(message.slice(0, i + 1))
@@ -66,7 +88,7 @@ function App() {
       }, 100)
       return () => clearInterval(interval)
     }
-  }, [showSplash])
+  }, [showSplash, projectData])
 
   if (showSplash) {
     return (
@@ -93,6 +115,8 @@ function App() {
     )
   }
 
+  const currentSectionData = projectData?.sections?.[currentSection]
+
   return (
     <>
       <audio ref={audioRef} src="/tom.mp3" preload="auto" />
@@ -100,7 +124,7 @@ function App() {
       <ThreeDContainer />
 
       {/* Pump.fun Link */}
-      <a href={`https://pump.fun/coin/${ca}?include-nsfw=true`} target="_blank" rel="noopener noreferrer" style={{
+      <a href={`https://pump.fun/coin/${projectData?.ca}?include-nsfw=true`} target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
         top: '10px',
         left: '10px',
@@ -116,8 +140,8 @@ function App() {
       </a>
 
       {/* Twitter Link */}
-      {twitterLink && (
-        <a href={twitterLink} target="_blank" rel="noopener noreferrer" style={{
+      {projectData?.twitter_link && (
+        <a href={projectData.twitter_link} target="_blank" rel="noopener noreferrer" style={{
           position: 'fixed',
           top: '10px',
           right: '10px',
@@ -134,10 +158,10 @@ function App() {
       )}
 
       {/* Telegram Link */}
-      {telegramLink && (
-        <a href={telegramLink} target="_blank" rel="noopener noreferrer" style={{
+      {projectData?.telegram_link && (
+        <a href={projectData.telegram_link} target="_blank" rel="noopener noreferrer" style={{
           position: 'fixed',
-          top: twitterLink ? '60px' : '10px',
+          top: projectData.twitter_link ? '60px' : '10px',
           right: '10px',
           fontFamily: "'Press Start 2P', cursive, sans-serif",
           fontSize: '1.8rem',
@@ -151,7 +175,64 @@ function App() {
         </a>
       )}
 
-      {/* Bottom Info */}
+      {/* Section Navigation Dots */}
+      {projectData?.sections && projectData.sections.length > 1 && (
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          left: '20px',
+          transform: 'translateY(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          zIndex: 20
+        }}>
+          {projectData.sections.map((_, index) => (
+            <div
+              key={index}
+              onClick={() => setCurrentSection(index)}
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                backgroundColor: index === currentSection ? '#ff69b4' : 'rgba(255, 255, 255, 0.3)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                border: '2px solid #fff'
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Background Multimedia */}
+      {projectData?.multimedia && projectData.multimedia.length > 0 && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh',
+          zIndex: -1,
+          opacity: 0.3
+        }}>
+          <img
+            src={projectData.multimedia[currentMultimedia]}
+            alt="Background"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
+            onError={(e) => {
+              // If image fails to load, try the next one or hide
+              e.target.style.display = 'none';
+            }}
+          />
+        </div>
+      )}
+
+      {/* Bottom Contract Info */}
       <div style={{
         position: 'fixed',
         bottom: '10px',
@@ -167,7 +248,7 @@ function App() {
         textAlign: 'center'
       }}>
         <br />
-        CA: {ca}{' '}
+        CA: {projectData?.ca}{' '}
         <button
           style={{
             background: '#ff69b4',
@@ -188,12 +269,94 @@ function App() {
       </div>
 
       {/* Main Content */}
-      <div className="content">
-        <h1 className="title">asstr0naut.XYZ</h1>
-        <p className="subtitle">a meme coin from another galaxy 🌌🚀</p>
-        {metaInfo.map((info, index) => (
-          <p key={index} style={{ fontSize: '0.8rem', marginTop: '10px' }}>{info}</p>
-        ))}
+      <div className="content" style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        padding: '20px',
+        textAlign: 'center'
+      }}>
+        <h1 className="title" style={{
+          fontFamily: "'Press Start 2P', cursive, sans-serif",
+          fontSize: '2.5rem',
+          color: '#ff69b4',
+          textShadow: '3px 3px 0 #000',
+          marginBottom: '20px',
+          letterSpacing: '0.1em'
+        }}>
+          {projectData?.title || 'Loading...'}
+        </h1>
+
+        {/* Current Section Content */}
+        {currentSectionData && (
+          <div style={{
+            maxWidth: '800px',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: '30px',
+            borderRadius: '15px',
+            border: '3px solid #ff69b4',
+            margin: '20px 0'
+          }}>
+            <h2 style={{
+              fontFamily: "'Press Start 2P', cursive, sans-serif",
+              fontSize: '1.5rem',
+              color: '#00ff00',
+              textShadow: '2px 2px 0 #000',
+              marginBottom: '20px'
+            }}>
+              {currentSectionData.title}
+            </h2>
+            
+            {currentSectionData.image_url && (
+              <div style={{ marginBottom: '20px' }}>
+                <img
+                  src={currentSectionData.image_url}
+                  alt={currentSectionData.title}
+                  style={{
+                    maxWidth: '300px',
+                    maxHeight: '200px',
+                    borderRadius: '10px',
+                    border: '2px solid #fff'
+                  }}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
+            
+            <p style={{
+              fontFamily: "'Press Start 2P', cursive, sans-serif",
+              fontSize: '0.9rem',
+              color: 'white',
+              lineHeight: '1.6',
+              textShadow: '1px 1px 0 #000'
+            }}>
+              {currentSectionData.text}
+            </p>
+          </div>
+        )}
+
+        {/* Section Progress Bar */}
+        {projectData?.sections && projectData.sections.length > 1 && (
+          <div style={{
+            width: '300px',
+            height: '4px',
+            backgroundColor: 'rgba(255, 255, 255, 0.3)',
+            borderRadius: '2px',
+            marginTop: '20px',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              width: `${((currentSection + 1) / projectData.sections.length) * 100}%`,
+              height: '100%',
+              backgroundColor: '#ff69b4',
+              transition: 'width 0.3s ease'
+            }} />
+          </div>
+        )}
       </div>
     </>
   )
