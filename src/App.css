@@ -13,13 +13,10 @@ body, html, #root {
 }
 
 .three-container {
-  border:  red solid 4px;
   background-image: url("./bg.jpg");
   background-size: auto;      /* Makes image cover full container */
   background-position: center;   /* Centers the image */
   background-repeat: repeat;  /* Prevents tiling */
-  width: 100vw;
-  height: 100vh;
   position: fixed;
   overflow: hidden;
   top: 0;
