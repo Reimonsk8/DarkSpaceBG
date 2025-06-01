@@ -11,13 +11,13 @@ interface Pig {
 }
 
 interface RainEffectProps {
-  density?: number; // Number of pigs per screen area
+  density?: number; // Number of elements per screen area
   emoji?: string; // Allow custom emoji
 }
 
-const PigRainEffect: React.FC<RainEffectProps> = ({ 
+const RainEffect: React.FC<RainEffectProps> = ({ 
   density = 20, 
-  emoji = '🐷' 
+  emoji = '✨' 
 }) => {
   const [pigs, setPigs] = useState<Pig[]>([]);
   const [dimensions, setDimensions] = useState({
@@ -123,4 +123,4 @@ const PigRainEffect: React.FC<RainEffectProps> = ({
   );
 };
 
-export default PigRainEffect;
+export default RainEffect;

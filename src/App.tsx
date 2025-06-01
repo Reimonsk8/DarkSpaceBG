@@ -137,7 +137,7 @@ function App() {
       {/* Pump.fun Link */}
       <a href={`https://pump.fun/coin/${projectData?.ca}?include-nsfw=true`} target="_blank" rel="noopener noreferrer" style={{
         position: 'fixed',
-        top: '10px',
+        bottom: '10px',
         left: '10px',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
         fontSize: '1.8rem',
@@ -157,7 +157,7 @@ function App() {
       {projectData?.twitter_link && (
         <a href={projectData.twitter_link} target="_blank" rel="noopener noreferrer" style={{
           position: 'fixed',
-          top: '10px',
+          bottom: '10px',
           right: '10px',
           fontFamily: "'Press Start 2P', cursive, sans-serif",
           fontSize: '1.8rem',
@@ -167,7 +167,7 @@ function App() {
           textDecoration: 'none',
           cursor: 'pointer'
         }}>
-          X
+          X twitter
         </a>
       )}
 
@@ -175,7 +175,7 @@ function App() {
       {projectData?.telegram_link && (
         <a href={projectData.telegram_link} target="_blank" rel="noopener noreferrer" style={{
           position: 'fixed',
-          top: projectData.twitter_link ? '60px' : '10px',
+          top: '10px',
           right: '10px',
           fontFamily: "'Press Start 2P', cursive, sans-serif",
           fontSize: '1.8rem',
@@ -253,7 +253,7 @@ function App() {
         left: '50%',
         transform: 'translateX(-50%)',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
-        fontSize: '1rem',
+        fontSize: '1.5em',
         color: '#00d4ff',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
@@ -287,9 +287,10 @@ function App() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         minHeight: '100vh',
         padding: '20px',
+        paddingTop: '40px',
         textAlign: 'center'
       }}>
         <h1 className="title" style={{
@@ -314,7 +315,6 @@ function App() {
             margin: '20px 0'
           }}>
             <h2 style={{
-              fontFamily: "'Press Start 2P', cursive, sans-serif",
               fontSize: '1.5rem',
               color: '#00d4ff',
               textShadow: '2px 2px 0 #000',
@@ -342,8 +342,7 @@ function App() {
             )}
             
             <p style={{
-              fontFamily: "'Press Start 2P', cursive, sans-serif",
-              fontSize: '0.9rem',
+              fontSize: '1.5rem',
               color: '#e0e0ff',
               lineHeight: '1.6',
               textShadow: '1px 1px 0 #000'
