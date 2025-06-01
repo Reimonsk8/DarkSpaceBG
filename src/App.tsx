@@ -103,7 +103,6 @@ function App() {
         left: 0,
         width: '100%',
         height: '100vh',
-        backgroundColor: '#000',
         color: '#fff',
         display: 'flex',
         justifyContent: 'center',
@@ -219,7 +218,7 @@ function App() {
           width: '100%',
           height: '100vh',
           zIndex: -1,
-          opacity: 0.3
+          opacity: 1.0
         }}>
           <img
             src={projectData.multimedia[currentMultimedia]}
@@ -298,10 +297,10 @@ function App() {
         {currentSectionData && (
           <div style={{
             maxWidth: '800px',
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: 'rgba(153, 67, 146, 0.8)',
             padding: '30px',
             borderRadius: '15px',
-            border: '3px solid #ff69b4',
+            border: '3px solidrgba(255, 105, 180, 0.49)',
             margin: '20px 0'
           }}>
             <h2 style={{
@@ -349,7 +348,6 @@ function App() {
           <div style={{
             width: '300px',
             height: '4px',
-            backgroundColor: 'rgba(255, 255, 255, 0.3)',
             borderRadius: '2px',
             marginTop: '20px',
             overflow: 'hidden'
