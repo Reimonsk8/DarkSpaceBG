@@ -29,6 +29,9 @@ function App() {
           // Set the background image CSS variable if multimedia array exists
           if (parsedBody[0]?.multimedia && parsedBody[0].multimedia.length > 0) {
             document.documentElement.style.setProperty('--bg-image', `url("${parsedBody[0].multimedia[0]}")`);
+            // Set background to fit height and repeat horizontally
+            document.documentElement.style.setProperty('--bg-repeat', 'repeat-x');
+            document.documentElement.style.setProperty('--bg-size', 'auto 100%');
           }
         }
       })
@@ -146,7 +149,7 @@ function App() {
       }}>
         pump.fun
         <br></br>
-        <img style={{width: '120px', height: '120px'}} src="https://pbs.twimg.com/media/GNKYIaaXMAApZY4.png" alt="pump.fun" />
+        <img style={{width: '120px', height: '120px'}} src="https://media.discordapp.net/attachments/1308631181004243016/1378773726396678295/qfxnma9mvnxnoak5svch.png?ex=683dd298&is=683c8118&hm=441d3534f2c5a434cb1cb68e654fd197e566888b718d6a11f9f6be99eb2f3c8e&=&format=webp&quality=lossless&width=656&height=656" alt="pump.fun" />
 
       </a>
 
