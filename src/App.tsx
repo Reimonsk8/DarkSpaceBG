@@ -24,6 +24,11 @@ function App() {
         const parsedBody = JSON.parse(data.body);
         if (Array.isArray(parsedBody) && parsedBody.length > 0) {
           setProjectData(parsedBody[0]);
+          
+          // Set the background image CSS variable if multimedia array exists
+          if (parsedBody[0]?.multimedia && parsedBody[0].multimedia.length > 0) {
+            document.documentElement.style.setProperty('--bg-image', `url("${parsedBody[0].multimedia[0]}")`);
+          }
         }
       })
       .catch(error => console.error('Error fetching API data:', error));
@@ -121,7 +126,7 @@ function App() {
     <>
       <audio ref={audioRef} src="/tom.mp3" preload="auto" />
 
-      <ThreeDContainer />
+      {/* <ThreeDContainer /> */}
 
       {/* Pump.fun Link */}
       <a href={`https://pump.fun/coin/${projectData?.ca}?include-nsfw=true`} target="_blank" rel="noopener noreferrer" style={{
