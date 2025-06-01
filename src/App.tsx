@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import ThreeDContainer from './components/ThreeDContainer'
+import PigRainEffect from './components/PigRainEffect'
 import './App.css'
 
 function App() {
@@ -126,6 +127,9 @@ function App() {
       <audio ref={audioRef} src="/tom.mp3" preload="auto" />
 
       {/* <ThreeDContainer /> */}
+      
+      {/* Pig Rain Effect */}
+      <PigRainEffect density={1} emoji="🐷" />
 
       {/* Pump.fun Link */}
       <a href={`https://pump.fun/coin/${projectData?.ca}?include-nsfw=true`} target="_blank" rel="noopener noreferrer" style={{
@@ -141,6 +145,9 @@ function App() {
         cursor: 'pointer'
       }}>
         pump.fun
+        <br></br>
+        <img style={{width: '120px', height: '120px'}} src="https://pbs.twimg.com/media/GNKYIaaXMAApZY4.png" alt="pump.fun" />
+
       </a>
 
       {/* Twitter Link */}
