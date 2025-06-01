@@ -10,12 +10,12 @@ interface Pig {
   rotationSpeed: number;
 }
 
-interface PigRainEffectProps {
+interface RainEffectProps {
   density?: number; // Number of pigs per screen area
   emoji?: string; // Allow custom emoji
 }
 
-const PigRainEffect: React.FC<PigRainEffectProps> = ({ 
+const PigRainEffect: React.FC<RainEffectProps> = ({ 
   density = 20, 
   emoji = '🐷' 
 }) => {

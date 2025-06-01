@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import ThreeDContainer from './components/ThreeDContainer'
-import PigRainEffect from './components/PigRainEffect'
+import RainEffect from './components/RainEffect'
 import './App.css'
 
 function App() {
@@ -131,8 +131,8 @@ function App() {
 
       {/* <ThreeDContainer /> */}
       
-      {/* Pig Rain Effect */}
-      <PigRainEffect density={1} emoji="🐷" />
+      {/* Borzoi Rain Effect */}
+      <RainEffect density={1} emoji="🐕" />
 
       {/* Pump.fun Link */}
       <a href={`https://pump.fun/coin/${projectData?.ca}?include-nsfw=true`} target="_blank" rel="noopener noreferrer" style={{
@@ -141,7 +141,7 @@ function App() {
         left: '10px',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
         fontSize: '1.8rem',
-        color: 'purple',
+        color: '#9d4edd',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
         textDecoration: 'none',
@@ -149,7 +149,7 @@ function App() {
       }}>
         pump.fun
         <br></br>
-        <img style={{width: '120px', height: '120px'}} src="https://media.discordapp.net/attachments/1308631181004243016/1378773726396678295/qfxnma9mvnxnoak5svch.png?ex=683dd298&is=683c8118&hm=441d3534f2c5a434cb1cb68e654fd197e566888b718d6a11f9f6be99eb2f3c8e&=&format=webp&quality=lossless&width=656&height=656" alt="pump.fun" />
+        <img style={{width: '120px', height: '120px'}} src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNm92dW9reDQzdTg1cm5ubnV2eGgyZGZvcGFxOGR4d3c2eGVmY3hiaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UPXI88yC63EPQf6yNy/giphy.gif" alt="pump.fun" />
 
       </a>
 
@@ -161,7 +161,7 @@ function App() {
           right: '10px',
           fontFamily: "'Press Start 2P', cursive, sans-serif",
           fontSize: '1.8rem',
-          color: 'pink',
+          color: '#c77dff',
           textShadow: '2px 2px 0 #000',
           zIndex: 20,
           textDecoration: 'none',
@@ -179,7 +179,7 @@ function App() {
           right: '10px',
           fontFamily: "'Press Start 2P', cursive, sans-serif",
           fontSize: '1.8rem',
-          color: 'white',
+          color: '#e0e0ff',
           textShadow: '2px 2px 0 #000',
           zIndex: 20,
           textDecoration: 'none',
@@ -209,7 +209,7 @@ function App() {
                 width: '12px',
                 height: '12px',
                 borderRadius: '50%',
-                backgroundColor: index === currentSection ? '#ff69b4' : 'rgba(255, 255, 255, 0.3)',
+                backgroundColor: index === currentSection ? '#7b2cbf' : 'rgba(157, 78, 221, 0.3)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 border: '2px solid #fff'
@@ -254,7 +254,7 @@ function App() {
         transform: 'translateX(-50%)',
         fontFamily: "'Press Start 2P', cursive, sans-serif",
         fontSize: '1rem',
-        color: 'yellow',
+        color: '#00d4ff',
         textShadow: '2px 2px 0 #000',
         zIndex: 20,
         padding: '4px 8px',
@@ -265,7 +265,7 @@ function App() {
         CA: {projectData?.ca}{' '}
         <button
           style={{
-            background: '#ff69b4',
+            background: '#5a189a',
             color: 'white',
             border: 'none',
             padding: '2px 6px',
@@ -279,7 +279,7 @@ function App() {
         >
           COPY
         </button>
-        {copied && <span style={{ marginLeft: '10px', color: '#00ff00' }}>Copied!</span>}
+        {copied && <span style={{ marginLeft: '10px', color: '#00ffaa' }}>Copied!</span>}
       </div>
 
       {/* Main Content */}
@@ -295,7 +295,7 @@ function App() {
         <h1 className="title" style={{
           fontFamily: "'Press Start 2P', cursive, sans-serif",
           fontSize: '2.5rem',
-          color: '#ff69b4',
+          color: '#c77dff',
           textShadow: '3px 3px 0 #000',
           marginBottom: '20px',
           letterSpacing: '0.1em'
@@ -307,16 +307,16 @@ function App() {
         {currentSectionData && (
           <div style={{
             maxWidth: '800px',
-            backgroundColor: 'rgba(153, 67, 146, 0.8)',
+            backgroundColor: 'rgba(26, 11, 46, 0.8)',
             padding: '30px',
             borderRadius: '15px',
-            border: '3px solidrgba(255, 105, 180, 0.49)',
+            border: '3px solid rgba(123, 44, 191, 0.5)',
             margin: '20px 0'
           }}>
             <h2 style={{
               fontFamily: "'Press Start 2P', cursive, sans-serif",
               fontSize: '1.5rem',
-              color: '#00ff00',
+              color: '#00d4ff',
               textShadow: '2px 2px 0 #000',
               marginBottom: '20px'
             }}>
@@ -344,7 +344,7 @@ function App() {
             <p style={{
               fontFamily: "'Press Start 2P', cursive, sans-serif",
               fontSize: '0.9rem',
-              color: 'white',
+              color: '#e0e0ff',
               lineHeight: '1.6',
               textShadow: '1px 1px 0 #000'
             }}>
@@ -365,7 +365,7 @@ function App() {
             <div style={{
               width: `${((currentSection + 1) / projectData.sections.length) * 100}%`,
               height: '100%',
-              backgroundColor: '#ff69b4',
+              backgroundColor: '#7b2cbf',
               transition: 'width 0.3s ease'
             }} />
           </div>
